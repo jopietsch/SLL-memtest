@@ -125,3 +125,27 @@ numbers are compared with earlier ones.
   (`results/9950/host/dmidecode-memory-2026-10-23.txt`). Moved in the lab's
   memory-qualification procedure and buffered hash monitor (lab `584f1cb`), so
   all memory work lives here.
+- **2026-10-23, pair-A precheck: stopped before soak**, runbook/preflight
+  revision `ceda623` (runbook introduced in `201b97a`). Linux preflight for
+  `20261023-pair-A` passed: two DIMMs, A/DIMM 1 serial `13000000` and
+  B/DIMM 1 serial `19000000`, both configured 3600 MT/s; BIOS 1804,
+  59.5 GiB visible, no measurement or other soak, input present, new run name.
+  Operator confirmed these are the sticks labelled A2/B2, installed in A2/B2:
+  firmware DIMM 1 therefore maps to physical slot 2 on both channels.
+  Pair-B is the remaining `24000000` and `23000000`, originally A1/B1.
+  Inspected all six photos in `~/memory-soak/run-1.bios/`: IMG_0219 shows
+  manually selected DDR5-3600 and Ai Overclock Tuner Auto (no EXPO profile
+  selected); IMG_0220 shows manual tCL/tRCD WR/tRCD RD/tRP/tRAS
+  30/30/30/30/58; IMG_0221/0222 show DRAM VDD and VDDQ 1.10000 V.
+  CPU VDDIO / MC Voltage is Auto with a 1.136 V reading, rather than the
+  required manual setting if supported. PBO Disabled and Curve Optimizer
+  off/none are not visible; no EZ Mode slot summary was supplied. Earlier
+  live BIOS frequency readings show 5600 before saving; Linux now reports
+  configured 3600. No soak started: need photos of PBO and Curve Optimizer,
+  MC voltage manually set to 1.136 V if supported (otherwise document the
+  limitation), and the saved/rebooted EZ Mode summary. Re-run preflight and
+  photo checks before starting pair-A. Evidence copied to
+  `results/9950/20261023-pair-A-precheck/`, compared against each source with
+  `cmp`, and verified with `SHA256SUMS`; originals left in place. Validation:
+  25 tests passed using the existing `second_looks/.pixi/envs/default/bin/python`
+  environment; system `python3` has no pytest installed.
