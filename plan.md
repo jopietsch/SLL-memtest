@@ -149,3 +149,24 @@ numbers are compared with earlier ones.
   `cmp`, and verified with `SHA256SUMS`; originals left in place. Validation:
   25 tests passed using the existing `second_looks/.pixi/envs/default/bin/python`
   environment; system `python3` has no pytest installed.
+- **2026-10-23, pair-A precheck retry: stopped before soak**, revision
+  `a6c5622`. Linux preflight again passed for `20261023-pair-A`: A/DIMM 1
+  serial `13000000`, B/DIMM 1 serial `19000000`, both 3600 MT/s, BIOS 1804,
+  59.5 GiB visible, no measurement or other soak, input present, new run name.
+  Inspected all ten photos in `~/memory-soak/run-1.bios/`. New IMG_0225
+  confirms Advanced → AMD Overclocking PBO Disable; IMG_0228 confirms BIOS
+  1804, 64 GB at DDR5-3600, A2/B2 populated and A1/B1 empty. Earlier photos
+  still show manual frequency/timings and DRAM VDD/VDDQ as recorded above.
+  IMG_0227 shows a manual CPU VDDIO / MC Voltage entry of **1.14000 V**,
+  not the runbook's 1.136 V; the separate +1.136 V reading does not establish
+  that setpoint. IMG_0225's monitor reads 1.120 V. IMG_0226 shows Curve
+  Optimizer **Auto**, with Auto/All Cores/Per Core/Per CCD choices; this does
+  not explicitly confirm off/none. No soak started. Next: set MC voltage to
+  1.136 V if supported; if firmware rounds or cannot set it, document that
+  limitation before proceeding. Confirm Curve Optimizer off/none (or supply
+  evidence that Auto applies no curve with PBO disabled). Save, reboot and
+  supply updated photos, then repeat preflight and BIOS checks for pair-A.
+  Evidence copied to `results/9950/20261023-pair-A-precheck-2/`; each source
+  copy checked with `cmp`, all `SHA256SUMS` verified, originals retained.
+  Validation: 25 tests passed using the existing
+  `second_looks/.pixi/envs/default/bin/python` environment.
