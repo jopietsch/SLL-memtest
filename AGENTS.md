@@ -1,6 +1,7 @@
 # Working in SLL-memtest
 
-Read README.md and plan.md first.
+Read README.md and plan.md first. For "run the next isolation step" on `9950`,
+follow docs/dimm-isolation-runbook.md exactly and stop at any failed check.
 
 - Record progress and decisions in plan.md, with commit references.
 - Do not run a soak while a BGP measurement runs on the same host, or the

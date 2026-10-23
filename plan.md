@@ -63,6 +63,9 @@ serials, which look like placeholders, so a physical label is the reliable ID.
   [docs/qualification-procedure.md](docs/qualification-procedure.md): the
   buffered-read monitor and qualification checklist written on the
   development host (lab `d45afad`); see that page's note.
+- `scripts/preflight.py`: before each run, checks the installed DIMMs
+  (count, channel, serial, configured speed), BIOS version, RAM, and that the
+  host is idle; BIOS-only settings are checked from photos (runbook).
 - Tests: `python3 -m pytest` (needs only pytest).
 
 Run detached so it survives the terminal:
@@ -75,6 +78,9 @@ Each run's directory, log and source revision are copied to
 `results/9950/<run>/` with a `SHA256SUMS`.
 
 ## Isolation
+
+Step by step, with the operator's and the agent's parts and the expected BIOS
+values: [docs/dimm-isolation-runbook.md](docs/dimm-isolation-runbook.md).
 
 PBO and Curve Optimizer off for the whole search, and memory set manually to
 3600 with the timings and voltage above, so a two-DIMM layout does not train to

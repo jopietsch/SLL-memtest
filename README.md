@@ -2,7 +2,8 @@
 
 Memory-integrity testing for the Second Looks Lab hosts. Host `9950` flips
 bits in RAM under load while Memtest86+ passes; this repository holds the
-search for the cause: the plan and its record ([plan.md](plan.md)), the soak
+search for the cause: the plan and its record ([plan.md](plan.md)), the
+[DIMM isolation runbook](docs/dimm-isolation-runbook.md), the soak, preflight
 and status scripts (`scripts/`), their tests (`tests/`), and each soak's
 results (`results/<host>/<run>/`, with `SHA256SUMS`).
 
