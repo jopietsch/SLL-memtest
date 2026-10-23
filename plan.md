@@ -1,0 +1,100 @@
+# Memory integrity plan: host `9950`
+
+Created 2026-10-23, moved from step 2 of the second-looks-lab
+[infrastructure plan](https://github.com/jopietsch/second-looks-lab/blob/main/docs/infrastructure-cleanup-plan.md)
+(lab `b6c992b`). Status: fault reproduced 2026-10-23; DIMM isolation next.
+This plan blocks all BGP measurement on `9950` (operator decision,
+2026-10-22) until its acceptance passes.
+
+## Finding
+
+Found 2026-10-22 during the lab's disk cleanup: the page-cache copy of the
+MRT input `bview.20260808.0000` differed from a fresh decompression of its
+verified `.gz` in 24 bytes, each one flipped bit `0x80`, in clusters about
+16 KB apart near file offsets 265 MB, 1277 MB and 1630 MB. A read that
+bypassed the page cache (`dd iflag=direct`) matched the recorded SHA-256
+`ab7a99d3…`, so the disk copy was intact and the corruption happened in RAM
+after the file was read. The kernel logged no machine check; the host has no
+ECC reporting (no EDAC memory controller). The 2026-10 validation's `bgpd` and
+`rustybgpd` general protection faults, and OpenBGPD's two failed runs, may
+have the same cause and are not attributed to the targets.
+
+After an earlier corruption finding the week before, the operator ran
+Memtest86+ 8.00 for 15 h 16 min: 5 passes, 0 errors, all 32 threads in
+parallel, DDR5-3600 CL 30-30-30-58, CPU at 49–52 °C (operator's photo).
+
+Every flip whose offset was listed (20 of 24) sits at byte offset 2 modulo 4
+and is bit 7: bit 7 of byte lane 2 of a 32-bit DDR5 subchannel, in both
+directions. The soak of 2026-10-23 then found bit 7 on byte lane 1 (record).
+
+## Host settings
+
+Read 2026-10-22 without root via `udevadm info -q property -p
+/sys/class/dmi/id`: ASUS PRIME X870-P WIFI, BIOS 1804 (2026-09-15), Ryzen 9
+9950X3D2; four Timetec `TIMETEC-U32G-5600` 32 GB single-rank DDR5 DIMMs, two
+per channel, rated 5600 MT/s. The board trained them to 3600 on its own; the
+operator changed nothing. Precision Boost Overdrive `Auto`, memory-controller
+voltage 1.136 V (operator's photo). EXPO not in use.
+
+## Tools
+
+- `scripts/memory_soak.py`: memory workers on every core write, invert and
+  verify page-aligned patterns; a reader evicts a large file from the page
+  cache and checks its hash cold and warm, comparing with a direct read on a
+  mismatch; DIMM (`spd5118`), CPU and NVMe temperatures every 5 s; kernel
+  traps from `journalctl -k`. Each corrupted byte is reported as
+  `lane<offset mod 4>.bit<n>`. Needs no root. Refuses while `bgperf_`
+  containers run. Exit 0 clean, 1 corruption or trap, 2 refused, 143 stopped.
+- `scripts/memory_soak_status.py`: reports every run under `~/memory-soak`.
+  Exit 1 on corruption or a kernel trap, 3 if a run died or stalled.
+- Tests: `python3 -m pytest` (needs only pytest).
+
+Run detached so it survives the terminal:
+
+    setsid nohup python3 scripts/memory_soak.py --hours 24 \
+        --file ~/bgperf-inputs/mrt/bview.20260808.0000 \
+        --out ~/memory-soak/<date>-<config> > ~/memory-soak/<date>-<config>.log 2>&1 &
+
+Each run's directory, log and source revision are copied to
+`results/9950/<run>/` with a `SHA256SUMS`.
+
+## Isolation
+
+PBO and Curve Optimizer off for the whole search, and memory set manually to
+3600 with the timings and voltage above, so a two-DIMM layout does not train to
+5600 and change the load on the controller. Record each DIMM's slot and serial
+(`sudo dmidecode -t memory` from a real terminal) before moving any.
+
+1. One DIMM per channel in the board's two-DIMM slots, reseating each:
+   pair A, 24 h with `--memory-gb 48`; then pair B.
+2. If one pair fails: each of its DIMMs alone, 24 h each.
+3. Move the failing DIMM into a slot that passed. Error follows the DIMM: RMA
+   it. Error stays with the slot: board or CPU.
+4. If neither pair fails: two DIMMs per channel at this speed is the fault.
+   Run two DIMMs, or four at a lower speed, and soak that.
+
+A clean run must be the full 24 h: the baseline ran 10 h clean before its
+first error.
+
+## Accept
+
+24 hours of the soak with no corruption and no kernel trap, at settings
+recorded here. Any setting change alters timing, so the host then needs a new
+baseline (the lab's post-separation validation step 3 cell) before its
+numbers are compared with earlier ones.
+
+## Record
+
+- **2026-10-22:** corruption found and the cached MRT input replaced from a
+  direct disk read (lab infrastructure plan, step 0 record).
+- **2026-10-23, baseline: fault reproduced**, lab `48a2070` scripts,
+  `results/9950/20261022-baseline-4dimm/`. All four DIMMs at the settings
+  above, 32 workers over 60.6 GB, started 2026-10-22 18:30:40, stopped by the
+  operator at 14.5 h. After 10 h clean, three memory workers saw corruption:
+  04:33:02 (worker 4) and 05:53:15 (workers 14 and 19); none in the 604
+  page-cache reads and no kernel trap. Each event is two bytes 24 or 40 bytes
+  apart, both bit 7 at offset 1 modulo 4 (`lane1.bit7`), flipped in both
+  directions. DIMMs were 31–38 °C and the CPU 57–58 °C at the time, as for the
+  whole run, so heat is not needed; nor is disk or network DMA. Bit 7 again
+  but on byte lane 1, not the lane 2 of 2026-10-22, which fits a weak DIMM or
+  marginal signalling better than one broken line.
