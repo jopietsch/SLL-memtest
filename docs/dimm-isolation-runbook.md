@@ -34,6 +34,32 @@ DIMMs are installed.
 | Precision Boost Overdrive | Disabled (not Auto) |
 | Curve Optimizer | Off / none |
 
+## Finding the slots
+
+Each slot has its name printed on the board beside it, usually at one end
+(`DIMM_A1`, `DIMM_A2`, `DIMM_B1`, `DIMM_B2`); a flashlight helps, and the CPU
+cooler can hide it. The layout diagram near the front of the board manual
+shows the same. On ASUS AM5 boards the order is normally, from the CPU
+outward:
+
+| Position from the CPU | Slot |
+|---|---|
+| 1st (closest) | A1 |
+| 2nd | A2 |
+| 3rd | B1 |
+| 4th (nearest the board edge) | B2 |
+
+So channel A is the two slots nearest the CPU and channel B the two farther
+out; within a channel, "1" is the slot nearer the CPU. Two-DIMM runs use the
+2nd and 4th slots. If the board's printing disagrees with this table, the
+printing wins.
+
+Linux cannot tell physical slots apart until two DIMMs are out. At `pair-A`'s
+preflight, if the two sticks left in the 2nd and 4th slots appear as
+`DIMM 1` on channels A and B, firmware's `DIMM 1` is the "2" slot and
+`pair-A` is serials `13000000` and `19000000`; if they appear as `DIMM 0`,
+the reverse. The agent records the mapping in plan.md.
+
 ## Operator: changing the DIMMs
 
 1. Shut down, switch off and unplug. Touch the case metal before handling
