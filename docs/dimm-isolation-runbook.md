@@ -29,10 +29,17 @@ DIMMs are installed.
 | DRAM frequency | DDR5-3600, set manually (not Auto) |
 | Primary timings | 30-30-30-58, set manually |
 | DRAM voltage | 1.10 V |
-| Memory controller voltage | 1.136 V (as before), set manually if the board allows |
+| Memory controller voltage | 1.140 V, set manually (firmware cannot set 1.136 V) |
 | EXPO / XMP | Disabled |
 | Precision Boost Overdrive | Disabled (not Auto) |
-| Curve Optimizer | Off / none |
+| Curve Optimizer | Auto, with PBO Disabled (firmware offers no off choice) |
+
+Operator confirmed these firmware limitations and that the settings were saved
+and rebooted on 2026-10-23 (plan.md record). IMG_0227 shows the manual 1.14000 V
+entry; its separate 1.136 V reading is telemetry, not the setpoint. IMG_0226
+shows Curve Optimizer Auto and the available choices. Accept these documented
+settings for the isolation search and keep them fixed across runs; Auto is the
+recorded setting, without claiming an independently verified effective curve.
 
 ## Finding the slots
 

@@ -82,10 +82,14 @@ Each run's directory, log and source revision are copied to
 Step by step, with the operator's and the agent's parts and the expected BIOS
 values: [docs/dimm-isolation-runbook.md](docs/dimm-isolation-runbook.md).
 
-PBO and Curve Optimizer off for the whole search, and memory set manually to
-3600 with the timings and voltage above, so a two-DIMM layout does not train to
-5600 and change the load on the controller. Record each DIMM's slot and serial
-(table above) before moving any.
+PBO Disabled and Curve Optimizer Auto for the whole search (the firmware has
+no off choice, operator confirmed 2026-10-23). Set memory manually to 3600
+with the timings and DRAM voltage above, and CPU VDDIO / MC Voltage manually
+to 1.140 V (firmware cannot set 1.136 V). Keep these settings fixed across
+isolation runs, so a two-DIMM layout does not train to 5600 and change the
+load on the controller. Record each DIMM's slot and serial (table above)
+before moving any. These CPU/MC settings differ from the four-DIMM baseline;
+a clean pair alone cannot attribute the original fault solely to DIMM count.
 
 1. One DIMM per channel in the board's two-DIMM slots (the manual names them;
    usually A2 and B2), reseating each:
@@ -170,3 +174,13 @@ numbers are compared with earlier ones.
   copy checked with `cmp`, all `SHA256SUMS` verified, originals retained.
   Validation: 25 tests passed using the existing
   `second_looks/.pixi/envs/default/bin/python` environment.
+- **2026-10-23, firmware limitations resolved**, following precheck commit
+  `d225756`: operator confirmed the BIOS will not accept MC voltage 1.136 V
+  and offers no Curve Optimizer off choice, explaining the photographed
+  1.14000 V manual setting and Auto. Operator also confirmed F10 save and
+  reboot with MC 1.140 V, PBO Disabled and Curve Optimizer Auto. Revised the
+  isolation settings and runbook to accept and hold these available settings
+  across runs. Curve Optimizer Auto is recorded as such; its effective curve
+  is not independently established. No replacement photos needed for these
+  already photographed settings. Next: fresh pair-A preflight, then start
+  its 24 h soak if all checks pass. Validation: 25 tests passed.
