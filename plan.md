@@ -184,3 +184,21 @@ numbers are compared with earlier ones.
   is not independently established. No replacement photos needed for these
   already photographed settings. Next: fresh pair-A preflight, then start
   its 24 h soak if all checks pass. Validation: 25 tests passed.
+- **2026-10-23, pair-A soak started**, source/runbook revision `c7b12a2`,
+  run `20261023-pair-A`. Fresh Linux preflight passed after the operator's
+  save/reboot confirmation. A2 (A/DIMM 1) serial `13000000`, B2 (B/DIMM 1)
+  serial `19000000`; settings confirmed by the ten photos and documented
+  firmware limitations above: manual DDR5-3600, timings 30-30-30-58, DRAM
+  VDD/VDDQ 1.10 V, manual MC 1.140 V, no EXPO, PBO Disabled, Curve Optimizer
+  Auto, BIOS 1804. Detached PID 8272, 32 workers over 48 GiB, 24 h from
+  2026-10-23 13:12:00 PDT; expected end 2026-10-24 13:12 PDT. Direct input
+  hash matched `ab7a99d3…`. Preflight, revision and the BIOS photo copy are
+  alongside the run under `~/memory-soak`; leave all originals in place.
+  Status confirmed RUNNING after first heartbeat at 13:17:01 PDT: all 32
+  workers reported 10–11 passes, reader 3 reads, zero corruption or kernel
+  traps. Peak temperatures at that check: DIMMs 34.75/32.5 °C, CPU 54.25 °C,
+  NVMe 42.85 °C. This is startup verification, not a qualification pass.
+  No BGP measurement, builds or other load while it runs. After completion,
+  check status, archive and verify the full results and decide the next run
+  from the outcome (pair-B if pair-A passes the full 24 h). Validation:
+  25 tests passed before starting the soak; no tests run during it.
