@@ -1,4 +1,4 @@
-# Working in SL-memtest
+# Working in SLL-memtest
 
 Read README.md and plan.md first.
 

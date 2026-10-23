@@ -1,4 +1,4 @@
-# SL-memtest
+# SLL-memtest
 
 Memory-integrity testing for the Second Looks Lab hosts. Host `9950` flips
 bits in RAM under load while Memtest86+ passes; this repository holds the
