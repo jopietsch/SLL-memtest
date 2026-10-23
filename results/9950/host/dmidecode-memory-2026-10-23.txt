@@ -1,0 +1,153 @@
+$ sudo dmidecode -t memory   (run by the operator on 9950, 2026-10-23, all four DIMMs installed)
+# dmidecode 3.6
+Getting SMBIOS data from sysfs.
+SMBIOS 3.6.0 present.
+
+Handle 0x000E, DMI type 16, 23 bytes
+Physical Memory Array
+        Location: System Board Or Motherboard
+        Use: System Memory
+        Error Correction Type: None
+        Maximum Capacity: 256 GB
+        Error Information Handle: 0x000D
+        Number Of Devices: 4
+
+Handle 0x0011, DMI type 17, 92 bytes
+Memory Device
+        Array Handle: 0x000E
+        Error Information Handle: 0x0010
+        Total Width: 64 bits
+        Data Width: 64 bits
+        Size: 32 GB
+        Form Factor: DIMM
+        Set: None
+        Locator: DIMM 0
+        Bank Locator: P0 CHANNEL A
+        Type: DDR5
+        Type Detail: Synchronous Unbuffered (Unregistered)
+        Speed: 5600 MT/s
+        Manufacturer: Timetec
+        Serial Number: 24000000
+        Asset Tag: Not Specified
+        Part Number: TIMETEC-U32G-5600
+        Rank: 1
+        Configured Memory Speed: 3600 MT/s
+        Minimum Voltage: 1.1 V
+        Maximum Voltage: 1.1 V
+        Configured Voltage: 1.1 V
+        Memory Technology: DRAM
+        Memory Operating Mode Capability: Volatile memory
+        Firmware Version: Unknown
+        Module Manufacturer ID: Bank 13, Hex 0x26
+        Module Product ID: Unknown
+        Memory Subsystem Controller Manufacturer ID: Unknown
+        Memory Subsystem Controller Product ID: Unknown
+        Non-Volatile Size: None
+        Volatile Size: 32 GB
+        Cache Size: None
+        Logical Size: None
+
+Handle 0x0014, DMI type 17, 92 bytes
+Memory Device
+        Array Handle: 0x000E
+        Error Information Handle: 0x0013
+        Total Width: 64 bits
+        Data Width: 64 bits
+        Size: 32 GB
+        Form Factor: DIMM
+        Set: None
+        Locator: DIMM 1
+        Bank Locator: P0 CHANNEL A
+        Type: DDR5
+        Type Detail: Synchronous Unbuffered (Unregistered)
+        Speed: 5600 MT/s
+        Manufacturer: Timetec
+        Serial Number: 13000000
+        Asset Tag: Not Specified
+        Part Number: TIMETEC-U32G-5600
+        Rank: 1
+        Configured Memory Speed: 3600 MT/s
+        Minimum Voltage: 1.1 V
+        Maximum Voltage: 1.1 V
+        Configured Voltage: 1.1 V
+        Memory Technology: DRAM
+        Memory Operating Mode Capability: Volatile memory
+        Firmware Version: Unknown
+        Module Manufacturer ID: Bank 13, Hex 0x26
+        Module Product ID: Unknown
+        Memory Subsystem Controller Manufacturer ID: Unknown
+        Memory Subsystem Controller Product ID: Unknown
+        Non-Volatile Size: None
+        Volatile Size: 32 GB
+        Cache Size: None
+        Logical Size: None
+
+Handle 0x0017, DMI type 17, 92 bytes
+Memory Device
+        Array Handle: 0x000E
+        Error Information Handle: 0x0016
+        Total Width: 64 bits
+        Data Width: 64 bits
+        Size: 32 GB
+        Form Factor: DIMM
+        Set: None
+        Locator: DIMM 0
+        Bank Locator: P0 CHANNEL B
+        Type: DDR5
+        Type Detail: Synchronous Unbuffered (Unregistered)
+        Speed: 5600 MT/s
+        Manufacturer: Timetec
+        Serial Number: 23000000
+        Asset Tag: Not Specified
+        Part Number: TIMETEC-U32G-5600
+        Rank: 1
+        Configured Memory Speed: 3600 MT/s
+        Minimum Voltage: 1.1 V
+        Maximum Voltage: 1.1 V
+        Configured Voltage: 1.1 V
+        Memory Technology: DRAM
+        Memory Operating Mode Capability: Volatile memory
+        Firmware Version: Unknown
+        Module Manufacturer ID: Bank 13, Hex 0x26
+        Module Product ID: Unknown
+        Memory Subsystem Controller Manufacturer ID: Unknown
+        Memory Subsystem Controller Product ID: Unknown
+        Non-Volatile Size: None
+        Volatile Size: 32 GB
+        Cache Size: None
+        Logical Size: None
+
+Handle 0x001A, DMI type 17, 92 bytes
+Memory Device
+        Array Handle: 0x000E
+        Error Information Handle: 0x0019
+        Total Width: 64 bits
+        Data Width: 64 bits
+        Size: 32 GB
+        Form Factor: DIMM
+        Set: None
+        Locator: DIMM 1
+        Bank Locator: P0 CHANNEL B
+        Type: DDR5
+        Type Detail: Synchronous Unbuffered (Unregistered)
+        Speed: 5600 MT/s
+        Manufacturer: Timetec
+        Serial Number: 19000000
+        Asset Tag: Not Specified
+        Part Number: TIMETEC-U32G-5600
+        Rank: 1
+        Configured Memory Speed: 3600 MT/s
+        Minimum Voltage: 1.1 V
+        Maximum Voltage: 1.1 V
+        Configured Voltage: 1.1 V
+        Memory Technology: DRAM
+        Memory Operating Mode Capability: Volatile memory
+        Firmware Version: Unknown
+        Module Manufacturer ID: Bank 13, Hex 0x26
+        Module Product ID: Unknown
+        Memory Subsystem Controller Manufacturer ID: Unknown
+        Memory Subsystem Controller Product ID: Unknown
+        Non-Volatile Size: None
+        Volatile Size: 32 GB
+        Cache Size: None
+        Logical Size: None

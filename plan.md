@@ -1,8 +1,7 @@
 # Memory integrity plan: host `9950`
 
-Created 2026-10-23, moved from step 2 of the second-looks-lab
-[infrastructure plan](https://github.com/jopietsch/second-looks-lab/blob/main/docs/infrastructure-cleanup-plan.md)
-(lab `b6c992b`). Status: fault reproduced 2026-10-23; DIMM isolation next.
+Created 2026-10-23 from step 2 of the second-looks-lab infrastructure plan
+([historical record at lab cd2d9e9](https://github.com/jopietsch/second-looks-lab/blob/cd2d9e98e159b4467a6e8fc7ba26f28fba1ca6c7/docs/infrastructure-cleanup-plan.md#2-memory-integrity-on-host-9950-blocks-measurement-there)). Status: fault reproduced 2026-10-23; DIMM isolation next.
 This plan blocks all BGP measurement on `9950` (operator decision,
 2026-10-22) until its acceptance passes.
 
@@ -36,6 +35,19 @@ per channel, rated 5600 MT/s. The board trained them to 3600 on its own; the
 operator changed nothing. Precision Boost Overdrive `Auto`, memory-controller
 voltage 1.136 V (operator's photo). EXPO not in use.
 
+DIMMs by slot (`sudo dmidecode -t memory`, 2026-10-23,
+`results/9950/host/`); all report 1.1 V, single rank, configured 3600:
+
+| Channel | Locator | Serial |
+|---|---|---|
+| A | DIMM 0 | 24000000 |
+| A | DIMM 1 | 13000000 |
+| B | DIMM 0 | 23000000 |
+| B | DIMM 1 | 19000000 |
+
+Label each stick with its serial before moving any; the firmware reports these
+serials, which look like placeholders, so a physical label is the reliable ID.
+
 ## Tools
 
 - `scripts/memory_soak.py`: memory workers on every core write, invert and
@@ -47,6 +59,10 @@ voltage 1.136 V (operator's photo). EXPO not in use.
   containers run. Exit 0 clean, 1 corruption or trap, 2 refused, 143 stopped.
 - `scripts/memory_soak_status.py`: reports every run under `~/memory-soak`.
   Exit 1 on corruption or a kernel trap, 3 if a run died or stalled.
+- `scripts/memory_hash_monitor.py` and
+  [docs/qualification-procedure.md](docs/qualification-procedure.md): the
+  buffered-read monitor and qualification checklist written on the
+  development host (lab `d45afad`); see that page's note.
 - Tests: `python3 -m pytest` (needs only pytest).
 
 Run detached so it survives the terminal:
@@ -63,9 +79,10 @@ Each run's directory, log and source revision are copied to
 PBO and Curve Optimizer off for the whole search, and memory set manually to
 3600 with the timings and voltage above, so a two-DIMM layout does not train to
 5600 and change the load on the controller. Record each DIMM's slot and serial
-(`sudo dmidecode -t memory` from a real terminal) before moving any.
+(table above) before moving any.
 
-1. One DIMM per channel in the board's two-DIMM slots, reseating each:
+1. One DIMM per channel in the board's two-DIMM slots (the manual names them;
+   usually A2 and B2), reseating each:
    pair A, 24 h with `--memory-gb 48`; then pair B.
 2. If one pair fails: each of its DIMMs alone, 24 h each.
 3. Move the failing DIMM into a slot that passed. Error follows the DIMM: RMA
@@ -98,3 +115,7 @@ numbers are compared with earlier ones.
   whole run, so heat is not needed; nor is disk or network DMA. Bit 7 again
   but on byte lane 1, not the lane 2 of 2026-10-22, which fits a weak DIMM or
   marginal signalling better than one broken line.
+- **2026-10-23:** operator recorded the DIMM slots and serials
+  (`results/9950/host/dmidecode-memory-2026-10-23.txt`). Moved in the lab's
+  memory-qualification procedure and buffered hash monitor (lab `584f1cb`), so
+  all memory work lives here.
