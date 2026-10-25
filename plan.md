@@ -1,7 +1,7 @@
 # Memory integrity plan: host `9950`
 
 Created 2026-10-23 from step 2 of the second-looks-lab infrastructure plan
-([historical record at lab cd2d9e9](https://github.com/jopietsch/second-looks-lab/blob/cd2d9e98e159b4467a6e8fc7ba26f28fba1ca6c7/docs/infrastructure-cleanup-plan.md#2-memory-integrity-on-host-9950-blocks-measurement-there)). Status: fault reproduced 2026-10-23; DIMM isolation next.
+([historical record at lab cd2d9e9](https://github.com/jopietsch/second-looks-lab/blob/cd2d9e98e159b4467a6e8fc7ba26f28fba1ca6c7/docs/infrastructure-cleanup-plan.md#2-memory-integrity-on-host-9950-blocks-measurement-there)). Status: pair-A passed 24 h on 2026-10-24; pair-B isolation next.
 This plan blocks all BGP measurement on `9950` (operator decision,
 2026-10-22) until its acceptance passes.
 
@@ -202,3 +202,27 @@ numbers are compared with earlier ones.
   check status, archive and verify the full results and decide the next run
   from the outcome (pair-B if pair-A passes the full 24 h). Validation:
   25 tests passed before starting the soak; no tests run during it.
+- **2026-10-24, pair-A PASSED**, source revision `c7b12a2`, startup record
+  `c14d176`, results `results/9950/20261023-pair-A/`. Completed the full
+  24.0 h, 2026-10-23 13:12:00 to 2026-10-24 13:12:01 PDT, with 32 workers
+  over 48 GiB, 3,059–3,072 passes per worker and 934 page-cache reader rounds.
+  Zero corruption events (no lane/bit events), zero kernel traps. Peak
+  temperatures: DIMMs 39.25/36 °C, CPU 58 °C, NVMe 43.85 °C.
+  DIMMs: A2 serial `13000000`, B2 serial `19000000`; BIOS 1804, manual
+  DDR5-3600, primary timings 30-30-30-58, DRAM VDD/VDDQ 1.10 V, manual MC
+  1.140 V, EXPO unused, PBO Disabled, Curve Optimizer Auto, as confirmed by
+  the archived photos and operator's firmware-limit/save/reboot record.
+  The status display's 28.08 h is elapsed time since startup at the time of
+  checking; `summary.json` confirms the soak itself stopped after 24.0 h.
+  Copied all run files, log, revision, preflight and BIOS photos into the
+  results directory; every source copy checked with `cmp` and every checksum
+  verified with `SHA256SUMS`. Originals retained under `~/memory-soak`.
+  Next: shut down and replace pair-A with pair-B, originally labelled A1/B1,
+  putting serial `24000000` in A2 and `23000000` in B2; leave A1/B1 empty.
+  Keep the same isolation BIOS settings, photograph them, save and reboot;
+  run preflight with expected serials `24000000,23000000` before pair-B's
+  24 h, 48 GiB soak. Pair-A qualifies only its tested configuration; this
+  does not clear other DIMM configurations or establish the original cause.
+  BGP measurements remain deferred during the isolation sequence, and a new
+  measurement baseline is required at the chosen final settings. Validation:
+  25 tests passed after the soak completed.
