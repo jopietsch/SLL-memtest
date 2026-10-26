@@ -1,7 +1,7 @@
 # Memory integrity plan: host `9950`
 
 Created 2026-10-23 from step 2 of the second-looks-lab infrastructure plan
-([historical record at lab cd2d9e9](https://github.com/jopietsch/second-looks-lab/blob/cd2d9e98e159b4467a6e8fc7ba26f28fba1ca6c7/docs/infrastructure-cleanup-plan.md#2-memory-integrity-on-host-9950-blocks-measurement-there)). Status: pair-A passed 24 h on 2026-10-24; pair-B isolation next.
+([historical record at lab cd2d9e9](https://github.com/jopietsch/second-looks-lab/blob/cd2d9e98e159b4467a6e8fc7ba26f28fba1ca6c7/docs/infrastructure-cleanup-plan.md#2-memory-integrity-on-host-9950-blocks-measurement-there)). Status: pair-A passed 24 h on 2026-10-24; pair-B soak running since 2026-10-25 17:36 PDT.
 This plan blocks all BGP measurement on `9950` (operator decision,
 2026-10-22) until its acceptance passes.
 
@@ -226,3 +226,28 @@ numbers are compared with earlier ones.
   BGP measurements remain deferred during the isolation sequence, and a new
   measurement baseline is required at the chosen final settings. Validation:
   25 tests passed after the soak completed.
+- **2026-10-25, pair-B soak started**, source/runbook revision `218d3ce`,
+  run `20261025-pair-B`. Preflight re-run after the 17:30 PDT boot passed:
+  A2 (A/DIMM 1) serial `24000000`, B2 (B/DIMM 1) serial `23000000`, both
+  3600 MT/s, BIOS 1804, 59.5 GiB visible, no measurement or other soak, input
+  present, new run name. Inspected all seven photos in
+  `~/memory-soak/run-2.bios/` (not the runbook's `<run>.bios/` path):
+  IMG_0243 EZ Mode shows BIOS 1804, 65536 MB at DDR5-3600, A2/B2 populated and
+  A1/B1 empty; IMG_0238 manual DDR5-3600 with Ai Overclock Tuner Auto (no
+  EXPO); IMG_0239 tCL/tRCD WR/tRCD RD/tRP/tRAS 30/30/30/30/58 on both
+  channels; IMG_0240/0241 DRAM VDD/VDDQ 1.10000 V and manual MC 1.14000 V
+  (live reading 1.168 V, against pair-A's 1.136/1.120 V readings: telemetry,
+  same setpoint); IMG_0242 PBO Disable. **Curve Optimizer is not shown in any
+  pair-B photo**, so it is unverified for this run; the operator could not
+  find the setting and directed the soak to start anyway (deviation from the
+  runbook's unknown-value stop). It was Auto for pair-A (IMG_0226) and has no
+  off choice. Detached PID 7584, 32 workers over 48 GiB, 24 h from
+  2026-10-25 17:36:12 PDT; expected end 2026-10-26 17:36 PDT. No BGP
+  measurement, builds or other load while it runs. After completion, archive
+  per the runbook and decide the next step from plan.md's isolation steps:
+  pair-B failing while pair-A passed points to step 2 (pair-B singles); both
+  passing points to step 4. Status confirmed RUNNING after first heartbeat
+  at 17:41:12 PDT: all 32 workers 10–11 passes, reader 3 reads, zero
+  corruption or kernel traps; peaks DIMMs 36/33.75 °C, CPU 56.1 °C, NVMe
+  43.85 °C. Startup verification only, not a qualification pass.
+  Validation: 25 tests passed before starting.
