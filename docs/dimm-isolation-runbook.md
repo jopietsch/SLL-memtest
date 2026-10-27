@@ -12,6 +12,7 @@ next isolation step"; it stops and asks whenever a check fails.
 | `pair-A` | the two that were in A2 and B2 | A2, B2 | read at preflight, then confirmed against the labels |
 | `pair-B` | the two that were in A1 and B1 | A2, B2 | the two serials of the four not in `pair-A` |
 | singles, swap | decided from the pair results (plan.md) | A2 | named in plan.md before the run |
+| `four-dimm` | all four, if both pairs pass (plan.md step 4) | their original slots: A1 `24000000`, A2 `13000000`, B1 `23000000`, B2 `19000000` | all four |
 
 The four serials, by original slot locator (`results/9950/host/`): A/DIMM 0
 `24000000`, A/DIMM 1 `13000000`, B/DIMM 0 `23000000`, B/DIMM 1 `19000000`.
@@ -107,7 +108,10 @@ the reverse. The agent records the mapping in plan.md.
    BIOS version, visible RAM, no `bgperf_` containers, no other soak, a new
    run name and the input file, and writes `~/memory-soak/<run>.preflight.json`.
    For `pair-A` omit `--serials`, report the two serials found, and ask the
-   operator to confirm they are the sticks labelled A2 and B2.
+   operator to confirm they are the sticks labelled A2 and B2. For
+   `four-dimm` use `--dimms 4 --serials 24000000,13000000,23000000,19000000`
+   and check the printed slots match the table: firmware `DIMM 0` is slot 1
+   and `DIMM 1` slot 2 (plan.md record).
 3. Read every photo in `~/memory-soak/<run>.bios/` and compare each setting
    with the table above. A value not visible in any photo is unknown, not
    assumed; ask for a new photo.
@@ -116,7 +120,9 @@ the reverse. The agent records the mapping in plan.md.
 
 ## Agent: starting the soak
 
-From the repository root, only after every check passes:
+From the repository root, only after every check passes. Two-DIMM runs use
+`--memory-gb 48`; `four-dimm` uses `--memory-gb 96` (about 80% of RAM, as
+for the pairs; the baseline's default half did reproduce the fault):
 
     RUN=<date>-<run>
     git -C . rev-parse --short HEAD > ~/memory-soak/$RUN.revision

@@ -1,7 +1,7 @@
 # Memory integrity plan: host `9950`
 
 Created 2026-10-23 from step 2 of the second-looks-lab infrastructure plan
-([historical record at lab cd2d9e9](https://github.com/jopietsch/second-looks-lab/blob/cd2d9e98e159b4467a6e8fc7ba26f28fba1ca6c7/docs/infrastructure-cleanup-plan.md#2-memory-integrity-on-host-9950-blocks-measurement-there)). Status: pair-A passed 24 h on 2026-10-24; pair-B soak running since 2026-10-25 17:36 PDT.
+([historical record at lab cd2d9e9](https://github.com/jopietsch/second-looks-lab/blob/cd2d9e98e159b4467a6e8fc7ba26f28fba1ca6c7/docs/infrastructure-cleanup-plan.md#2-memory-integrity-on-host-9950-blocks-measurement-there)). Status: pair-A and pair-B each passed 24 h (2026-10-24, 2026-10-26); four-DIMM recheck next.
 This plan blocks all BGP measurement on `9950` (operator decision,
 2026-10-22) until its acceptance passes.
 
@@ -97,8 +97,17 @@ a clean pair alone cannot attribute the original fault solely to DIMM count.
 2. If one pair fails: each of its DIMMs alone, 24 h each.
 3. Move the failing DIMM into a slot that passed. Error follows the DIMM: RMA
    it. Error stays with the slot: board or CPU.
-4. If neither pair fails: two DIMMs per channel at this speed is the fault.
-   Run two DIMMs, or four at a lower speed, and soak that.
+4. If neither pair fails: reinstall all four in their original slots, each
+   reseated, at the isolation settings, and soak 24 h with `--memory-gb 96`
+   (run `four-dimm` in the runbook). Both pairs passing does not by itself
+   blame two DIMMs per channel: the failing baseline also differed in seating,
+   in using slots A1/B1, and in PBO Auto and MC voltage Auto.
+   - Passes: keep 128 GB at these settings. Reseating or the setting changes
+     fixed it; this run cannot tell which. Rerun the lab's measurement
+     baseline before comparing BGP numbers.
+   - Fails: two DIMMs per channel on this board and CPU is the fault. Try
+     more MC voltage or a lower speed before replacing anything; 2 x 64 GB
+     DIMMs would give 128 GB at one per channel.
 
 A clean run must be the full 24 h: the baseline ran 10 h clean before its
 first error.
@@ -251,3 +260,26 @@ numbers are compared with earlier ones.
   corruption or kernel traps; peaks DIMMs 36/33.75 °C, CPU 56.1 °C, NVMe
   43.85 °C. Startup verification only, not a qualification pass.
   Validation: 25 tests passed before starting.
+- **2026-10-26, pair-B PASSED**, source revision `218d3ce`, startup record
+  `e2561d9`, results `results/9950/20261025-pair-B/`. Completed the full
+  24.0 h, 2026-10-25 17:36:12 to 2026-10-26 17:36:12 PDT, with 32 workers
+  over 48 GiB, 3,062–3,112 passes per worker and 926 page-cache reader rounds.
+  Zero corruption events (no lane/bit events), zero kernel traps. Peak
+  temperatures: DIMMs 40.25/37.25 °C, CPU 59.125 °C, NVMe 44.85 °C, about
+  1 °C above pair-A, warmest in the afternoon. DIMMs: A2 serial `24000000`,
+  B2 serial `23000000`. Settings as for pair-A by photo (`bios/`, copied from
+  `~/memory-soak/run-2.bios/`), except Curve Optimizer, not photographed for
+  this run (see the start record). Copied run files, log, revision,
+  preflight and photos; every copy checked with `cmp` and `SHA256SUMS`
+  verified. Originals retained under `~/memory-soak`.
+  All four DIMMs have now passed 24 h, in pairs, in slots A2/B2. Isolation
+  step 4 originally concluded from this that two DIMMs per channel was the
+  fault; operator decision 2026-10-26: the failing baseline also differed in
+  seating, slots A1/B1 and PBO/MC voltage, and the host needs all 128 GB, so
+  revised step 4 to a four-DIMM recheck at the isolation settings (24 h).
+  No DIMM is implicated; no replacement planned. Next: reinstall all four in
+  their original slots (A1 `24000000`, A2 `13000000`, B1 `23000000`,
+  B2 `19000000`), reseated; keep the isolation BIOS settings and photograph
+  them, including Curve Optimizer if it can be found (F9 search
+  "CURVE OPTIMIZER", as IMG_0226); save, reboot, then run `four-dimm` per
+  the runbook. Validation: 25 tests passed.
