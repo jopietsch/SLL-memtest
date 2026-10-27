@@ -1,0 +1,40 @@
+{
+  "run": "20261026-four-dimm",
+  "checked_at": "2026-10-26T19:01:57-07:00",
+  "source_revision": "705199e",
+  "outcome": "SETTINGS_ACCEPTED_BY_OPERATOR_BUT_SOAK_START_FAILED",
+  "linux_preflight": "20261026-four-dimm.preflight.json",
+  "linux_preflight_passed": true,
+  "slot_serial_mapping_confirmed": {
+    "A1": "24000000",
+    "A2": "13000000",
+    "B1": "23000000",
+    "B2": "19000000"
+  },
+  "photos": {
+    "IMG_0250.jpeg": "3a5cbfd487d5805e2ea43a28a5269d27128432d25d57538024445f93b59a9f9c",
+    "IMG_0252.jpeg": "558e1124642e18ff6b61a9ef28c18b0c724ab5224b7ed3f035c9df7f3034f8e9",
+    "IMG_0253.jpeg": "852cd6d436345a91aa60288b3622b4c10d5c2633aff2eb448292953d960cbf1c"
+  },
+  "confirmed_by_photo": {
+    "IMG_0250.jpeg": "BIOS 1804; 131072 MB; DDR5-3600 current frequency; all four slots populated",
+    "IMG_0252.jpeg": "Manual primary timings tCL/tRCD WR/tRCD RD/tRP/tRAS 30/30/30/30/58; both channels match",
+    "IMG_0253.jpeg": "Curve Optimizer Auto; available choices Auto/All Cores/Per Core/Per CCD"
+  },
+  "unknown_settings": [
+    "DRAM frequency manually set to DDR5-3600 (current frequency alone does not establish manual selection)",
+    "DRAM VDD and VDDQ set to 1.10 V",
+    "CPU VDDIO / MC Voltage manually set to 1.140 V (live 1.168 V is telemetry)",
+    "EXPO / XMP disabled / no profile selected",
+    "Precision Boost Overdrive Disabled"
+  ],
+  "next_action": "Supply readable Ai Tweaker frequency/profile and voltage photos and PBO Disabled photo for this four-DIMM configuration; save and reboot after any changes; rerun preflight and photo checks before starting 24 h / 96 GiB soak.",
+  "policy": "docs/dimm-isolation-runbook.md: Agent checks before starting, steps 3-4; unknown values stop the run.",
+  "repository_record": "Repository outside writable roots; no repository files changed, no commit made.",
+  "soak_started": false,
+  "operator_override": {
+    "time": "2026-10-26T19:03:15-07:00",
+    "instruction": "i didn't change anythign. assume it's all the same as before. run the soak",
+    "accepted_settings": "Operator confirms unphotographed settings unchanged from prior isolation runs: manual DDR5-3600, DRAM VDD/VDDQ 1.10 V, manual MC 1.140 V, EXPO unused, PBO Disabled. These remain unverified by current photos."
+  }
+}

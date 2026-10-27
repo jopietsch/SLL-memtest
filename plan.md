@@ -283,3 +283,71 @@ numbers are compared with earlier ones.
   them, including Curve Optimizer if it can be found (F9 search
   "CURVE OPTIMIZER", as IMG_0226); save, reboot, then run `four-dimm` per
   the runbook. Validation: 25 tests passed.
+- **2026-10-26, four-DIMM start failed before workers ran**, source/runbook
+  revision `705199e`, attempted run `20261026-four-dimm`. Linux preflight
+  passed: A1 `24000000`, A2 `13000000`, B1 `23000000`, B2 `19000000`,
+  all configured 3600 MT/s, BIOS 1804, 121.2 GiB visible, no measurement
+  or other soak, input present, new run name. Inspected all three photos in
+  `~/memory-soak/four-dimms.bios/`: IMG_0250 confirms all four slots,
+  131072 MB at DDR5-3600 and BIOS 1804; IMG_0252 confirms manual primary
+  timings 30/30/30/30/58 on both channels; IMG_0253 shows Curve Optimizer
+  Auto. Manual frequency selection, DRAM VDD/VDDQ, manual MC setpoint,
+  EXPO selection and PBO state are not shown. Initially stopped for missing
+  photo evidence; operator then confirmed nothing had changed and explicitly
+  directed proceeding on the prior isolation settings (manual DDR5-3600,
+  DRAM VDD/VDDQ 1.10 V, manual MC 1.140 V, EXPO unused, PBO Disabled).
+  These settings are accepted by operator confirmation, not independently
+  verified in the current photos; deviation from the runbook's unknown-value
+  stop is authorized for this attempt.
+  Preflight was rerun successfully and 25 tests passed before launch.
+  The direct input hash matched `ab7a99d3…`. The attempted 24 h, 96 GiB,
+  32-worker run failed at 19:03 PDT before any memory worker started:
+  Python 3.14's multiprocessing forkserver `listener.bind` raised
+  `PermissionError: [Errno 1] Operation not permitted` in this session's
+  restricted execution environment. No soak is running and no qualification
+  result was obtained; this is a launcher failure, not a memory-test failure.
+  Evidence retained under `~/memory-soak/20261026-four-dimm*`:
+  preflight, BIOS-check/operator confirmation, startup record, source revision,
+  log and partial run directory (`config.json` only); photos remain in
+  `four-dimms.bios/`. Next: launch from a host terminal that permits the
+  worker startup, using a fresh run name (suggested
+  `20261026-four-dimm-retry`), fresh preflight, the same settings and the
+  runbook's 24 h / 96 GiB command; confirm RUNNING and a first heartbeat.
+  A host-terminal retry subsequently wrote config.json at 19:11:16 PDT,
+  preflight, revision, events.jsonl and temperature samples under
+  `~/memory-soak/20261026-four-dimm-retry*`. At the first check there was
+  no heartbeat yet. The agent's restricted process view could not see a
+  matching PID, so its status script reported DIED; host-terminal status
+  and the first heartbeat are still needed to establish liveness.
+  BGP measurements remain deferred.
+- **2026-10-27, four-DIMM retry FAILED**, source revision `705199e`, run
+  `20261026-four-dimm-retry`. Host-terminal startup was verified by the
+  operator's status output: PID 8806, RUNNING, with a 19:21:16 heartbeat.
+  Ran 2026-10-26 19:11:16 to 2026-10-27 06:42:05 PDT, 11.514 h,
+  32 workers over 96 GiB, then operator sent SIGTERM after corruption.
+  Final summary: 2 memory corruption events, 14 `lane1.bit7` flips,
+  zero kernel traps, 484 reader rounds, 717-731 passes per memory worker.
+  First event 02:13:55 (about 7.04 h), worker 1, 10 flipped bytes; second
+  05:16:37, worker 7, 4 flipped bytes. No page-cache corruption was reported.
+  Peak temperatures: DIMMs 38.75/38.5/36.75/33.5 C, CPU 58.75 C,
+  NVMe 43.85 C. All four serials were in their original slots at 3600 MT/s;
+  settings are supported by current photos and the operator's unchanged-
+  settings confirmation recorded above. Current settings and reseating did
+  not resolve the four-DIMM fault. Both pairs passed in A2/B2; this points
+  toward a four-DIMM/slot-path problem but does not isolate the DIMMs,
+  motherboard or CPU, or independently qualify A1/B1 with one DIMM per channel.
+  Results, log, revision, preflight, current BIOS photos and settings evidence
+  archived in `results/9950/20261026-four-dimm-retry/`; the failed sandbox
+  launch evidence is in `results/9950/20261026-four-dimm-startup-failure/`.
+  Every repository copy was byte-compared with its staged source and all
+  SHA256SUMS verified. Originals retained under `~/memory-soak`.
+  Recommended next experiment (not started): keep all four DIMMs and change
+  only manual DRAM frequency to DDR5-3200 if offered by the BIOS. Keep manual
+  timings, DRAM VDD/VDDQ, MC voltage, PBO and Curve Optimizer unchanged.
+  Photograph the selected frequency, save/reboot, and run fresh preflight
+  with `--speed 3200` before a fresh 24 h / 96 GiB soak. The runbook's
+  fixed-3600 setting applies to the completed isolation comparison; this
+  proposed mitigation experiment must explicitly record its lower speed.
+  If 3200 is not offered, record the available lower frequency choices first.
+  BGP measurements remain blocked until a complete clean qualification run.
+  Archive/record validation: 25 tests passed before committing.

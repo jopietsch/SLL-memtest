@@ -1,0 +1,31 @@
+Traceback (most recent call last):
+  File "/home/jpietsch/code/SLL-memtest/scripts/memory_soak.py", line 378, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/home/jpietsch/code/SLL-memtest/scripts/memory_soak.py", line 313, in main
+    w.start()
+    ~~~~~~~^^
+  File "/usr/lib/python3.14/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+                  ~~~~~~~~~~~^^^^^^
+  File "/usr/lib/python3.14/multiprocessing/context.py", line 230, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/multiprocessing/context.py", line 306, in _Popen
+    return Popen(process_obj)
+  File "/usr/lib/python3.14/multiprocessing/popen_forkserver.py", line 35, in __init__
+    super().__init__(process_obj)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/multiprocessing/popen_fork.py", line 20, in __init__
+    self._launch(process_obj)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/multiprocessing/popen_forkserver.py", line 51, in _launch
+    self.sentinel, w = forkserver.connect_to_new_process(self._fds)
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/lib/python3.14/multiprocessing/forkserver.py", line 89, in connect_to_new_process
+    self.ensure_running()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/multiprocessing/forkserver.py", line 167, in ensure_running
+    listener.bind(address)
+    ~~~~~~~~~~~~~^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted

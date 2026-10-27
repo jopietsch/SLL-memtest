@@ -1,0 +1,11 @@
+{
+  "started": "2026-10-26T19:03:36",
+  "hours": 24.0,
+  "workers": 32,
+  "memory_bytes": 103079215104,
+  "verifies": 4,
+  "seed": 20261022,
+  "files": {
+    "/home/jpietsch/bgperf-inputs/mrt/bview.20260808.0000": "ab7a99d366b511daa0fe42ba8c816136da06d2865585e3634ec66f4b5987fa02"
+  }
+}

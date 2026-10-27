@@ -1,0 +1,29 @@
+{
+  "run": "20261026-four-dimm",
+  "launched_at": "2026-10-26T19:03:15-07:00",
+  "revision": "705199e",
+  "command": [
+    "python3",
+    "/home/jpietsch/code/SLL-memtest/scripts/memory_soak.py",
+    "--hours",
+    "24",
+    "--memory-gb",
+    "96",
+    "--file",
+    "/home/jpietsch/bgperf-inputs/mrt/bview.20260808.0000",
+    "--sha256",
+    "bview.20260808.0000=ab7a99d366b511daa0fe42ba8c816136da06d2865585e3634ec66f4b5987fa02",
+    "--out",
+    "/home/jpietsch/memory-soak/20261026-four-dimm"
+  ],
+  "validation": "25 tests passed before starting",
+  "settings_evidence": "/home/jpietsch/memory-soak/20261026-four-dimm.bios-check.json",
+  "repository_record": "Repository outside writable roots; startup record saved alongside run.",
+  "outcome": "FAILED_TO_START",
+  "soak_running": false,
+  "failure": "Python 3.14 multiprocessing forkserver listener.bind raised PermissionError: [Errno 1] Operation not permitted in restricted execution environment; no memory workers started.",
+  "failed_at": "2026-10-26T19:03:58-07:00",
+  "direct_input_hash_verified": true,
+  "log": "/home/jpietsch/memory-soak/20261026-four-dimm.log",
+  "initial_launcher_pid": 5
+}
