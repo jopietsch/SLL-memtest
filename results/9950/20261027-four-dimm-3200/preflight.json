@@ -1,0 +1,82 @@
+{
+  "run": "20261027-four-dimm-3200",
+  "time": "2026-10-27T12:45:15",
+  "passed": true,
+  "dimms": [
+    {
+      "channel": "A",
+      "locator": "DIMM 0",
+      "serial": "24000000",
+      "size_gb": 32,
+      "configured_mts": 3200
+    },
+    {
+      "channel": "A",
+      "locator": "DIMM 1",
+      "serial": "13000000",
+      "size_gb": 32,
+      "configured_mts": 3200
+    },
+    {
+      "channel": "B",
+      "locator": "DIMM 0",
+      "serial": "23000000",
+      "size_gb": 32,
+      "configured_mts": 3200
+    },
+    {
+      "channel": "B",
+      "locator": "DIMM 1",
+      "serial": "19000000",
+      "size_gb": 32,
+      "configured_mts": 3200
+    }
+  ],
+  "checks": [
+    {
+      "name": "dimm count",
+      "ok": true,
+      "detail": "4 installed, expected 4"
+    },
+    {
+      "name": "serials",
+      "ok": true,
+      "detail": "found ['13000000', '19000000', '23000000', '24000000'], expected ['13000000', '19000000', '23000000', '24000000']"
+    },
+    {
+      "name": "configured speed",
+      "ok": true,
+      "detail": "all 3200 MT/s"
+    },
+    {
+      "name": "bios version",
+      "ok": true,
+      "detail": "1804, expected 1804"
+    },
+    {
+      "name": "ram visible",
+      "ok": true,
+      "detail": "121.2 GiB"
+    },
+    {
+      "name": "no measurement",
+      "ok": true,
+      "detail": "no bgperf_ containers"
+    },
+    {
+      "name": "no other soak",
+      "ok": true,
+      "detail": "running pids []"
+    },
+    {
+      "name": "new run name",
+      "ok": true,
+      "detail": "/home/jpietsch/memory-soak/20261027-four-dimm-3200"
+    },
+    {
+      "name": "input present",
+      "ok": true,
+      "detail": "/home/jpietsch/bgperf-inputs/mrt/bview.20260808.0000"
+    }
+  ]
+}

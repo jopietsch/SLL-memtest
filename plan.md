@@ -351,3 +351,36 @@ numbers are compared with earlier ones.
   If 3200 is not offered, record the available lower frequency choices first.
   BGP measurements remain blocked until a complete clean qualification run.
   Archive/record validation: 25 tests passed before committing.
+- **2026-10-28, four-DIMM at DDR5-3200 FAILED**, source revision `37e8b1f`,
+  run `20261027-four-dimm-3200`. Only change from `20261026-four-dimm-retry`:
+  manual DRAM frequency DDR5-3600 -> DDR5-3200. Preflight (`--dimms 4
+  --speed 3200`) passed: A1 `24000000`, A2 `13000000`, B1 `23000000`,
+  B2 `19000000`, all configured 3200 MT/s, BIOS 1804, 121.2 GiB visible.
+  Confirmed by photo (IMG_0255-0261): Memory Frequency DDR5-3200MHz set
+  manually and running 3200 MHz; Ai Overclock Tuner Auto (no EXPO/XMP
+  profile); primary timings 30/30/30/30/58 on both channels; DRAM VDD/VDDQ
+  1.10 V; manual MC 1.140 V (live 1.168 V is telemetry); all four slots,
+  131072 MB. PBO Disabled and Curve Optimizer Auto were not photographed;
+  the operator confirmed them unchanged from the previous run.
+  Launched from the agent sandbox (forkserver worker startup worked this
+  time), PID 9503, 32 workers over 96 GiB; first heartbeat 12:59:01.
+  Ran 2026-10-27 12:54:01 to 2026-10-28 08:55:44 PDT, 20.029 h, then stopped
+  with SIGTERM at the operator's request after corruption.
+  Final summary: 2 memory corruption events, 32 `lane1.bit7` flips, zero
+  kernel traps, 769 reader rounds, 1119-1127 passes per memory worker.
+  First event 03:14:46 (about 14.35 h), worker 25, 16 flipped bytes; second
+  05:38:47 (about 16.75 h), worker 15, 16 flipped bytes. Every flipped byte
+  differs by exactly 0x80, the same signature as at 3600 MT/s.
+  No page-cache corruption was reported.
+  Peak temperatures: DIMMs 39.25/39.25/37.75/34.25 C, CPU 57.6 C,
+  NVMe 43.85 C. A single 47.75 C `dimm-1-0053` sample at 06:14:46, with 32.0 C
+  on either side 5 s apart and after both events, is treated as a sensor glitch.
+  Lowering the frequency to 3200 delayed the first error (14.35 h vs 7.04 h)
+  but did not remove the four-DIMM fault; it is not a mitigation.
+  Results, log, revision, preflight, BIOS photos and settings evidence
+  archived in `results/9950/20261027-four-dimm-3200/`; every copy
+  byte-compared with its source and SHA256SUMS verified. Originals retained
+  under `~/memory-soak`. Next run not yet chosen; it should come from the
+  isolation steps (e.g. singles/swap to qualify A1/B1 one DIMM per channel).
+  BGP measurements remain blocked until a complete clean qualification run.
+  Archive/record validation: 25 tests passed before committing.

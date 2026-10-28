@@ -1,0 +1,50 @@
+{
+  "run": "20261027-four-dimm-3200",
+  "checked_at": "2026-10-27T12:47:00-07:00",
+  "source_revision": "37e8b1f",
+  "experiment": "Four-DIMM mitigation test: only change from 20261026-four-dimm-retry is manual DRAM frequency DDR5-3600 -> DDR5-3200",
+  "linux_preflight": "20261027-four-dimm-3200.preflight.json",
+  "linux_preflight_passed": true,
+  "preflight_speed": 3200,
+  "slot_serial_mapping_confirmed": {
+    "A1": "24000000",
+    "A2": "13000000",
+    "B1": "23000000",
+    "B2": "19000000"
+  },
+  "photos_dir": "run-4.bios",
+  "photos": {
+    "IMG_0255.jpeg": "8c87df2dc48014ec1ebccf61b8ca71a28ec873e218dca658a3e9c972812297bb",
+    "IMG_0256.jpeg": "7bc893a1965aafcc509b7a08547e7082cf58a32a4570163e54081907eb2aafed",
+    "IMG_0257.jpeg": "46bff679f526d1b09d3dfd8044848e8cbf0f4131e191371d3c3a4ddfb233f7c9",
+    "IMG_0258.jpeg": "e44d3d1dfb7d01f85b96692ba43e467af43241810a5b9858f48be230cdedc55f",
+    "IMG_0259.jpeg": "01a9ca7a53b8695e56ae80cb72db4092731052bc6ea75008467f0cbe331388df",
+    "IMG_0260.jpeg": "18949dea3d0ac52a828d31e48c411f4bf409bbaf8085794b0ea754dcf994cfc1",
+    "IMG_0261.jpeg": "8c67773ccea8474bbad77cb99052c3cab0f5de15bd665e1650dcd78b281fca8d"
+  },
+  "confirmed_by_photo": {
+    "IMG_0255.jpeg": "Ai Tweaker (blurred duplicate of IMG_0256): Memory Frequency DDR5-3200MHz",
+    "IMG_0256.jpeg": "Ai Tweaker: Ai Overclock Tuner Auto (no EXPO/XMP profile); Memory Frequency DDR5-3200MHz manual; Target DRAM Frequency 3200MHz; ASUS Performance Enhancement Disabled",
+    "IMG_0257.jpeg": "Ai Tweaker voltages: CPU VDDIO/MC 1.14000 V manual (live 1.168 V telemetry); DRAM VDD 1.10000 V; DRAM VDDQ 1.10000 V",
+    "IMG_0258.jpeg": "DRAM Timing Control: Tcl/Trcd Wr/Trcd Rd/Trp/Tras 30/30/30/30/58 manual, CHA and CHB match",
+    "IMG_0259.jpeg": "EZ Mode: BIOS 1804, 9950X3D2, 131072 MB DDR5 3200MHz, DIMM_A1/A2/B1/B2 populated (Timetec 32768MB, SPD 5600)",
+    "IMG_0260.jpeg": "EZ Mode duplicate of IMG_0259",
+    "IMG_0261.jpeg": "Main: BIOS 1804 x64 build 09/15/2026, AGESA ComboAM5PI_1301d, 131072 MB, Memory Frequency 3200 MHz running"
+  },
+  "operator_confirmed_not_photographed": {
+    "time": "2026-10-27T12:47:00-07:00",
+    "instruction": "the pbo and curve optimizer are unchanged from the last run",
+    "settings": "Precision Boost Overdrive Disabled; Curve Optimizer Auto (as IMG_0226 / prior isolation runs)"
+  },
+  "outcome": "SETTINGS_ACCEPTED",
+  "soak_started": true,
+  "startup": {
+    "launched_from": "agent sandbox (forkserver worker start succeeded this session)",
+    "pid": 9503,
+    "started": "2026-10-27T12:54:01",
+    "first_heartbeat": "2026-10-27T12:59:01",
+    "workers": "32 memory + reader",
+    "command_args": "--hours 24 --memory-gb 96, runbook input and sha256",
+    "revision": "37e8b1f"
+  }
+}
