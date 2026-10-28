@@ -384,3 +384,22 @@ numbers are compared with earlier ones.
   isolation steps (e.g. singles/swap to qualify A1/B1 one DIMM per channel).
   BGP measurements remain blocked until a complete clean qualification run.
   Archive/record validation: 25 tests passed before committing.
+- **2026-10-28, next run planned: four-DIMM with raised memory voltages**,
+  run name `20261028-four-dimm-1v25`. Operator needs all 128 GB, and memory
+  prices make a 2 x 64 GB kit a last resort, so try isolation step 4's "more
+  MC voltage" before asking the seller for a remedy. All four DIMMs in their
+  original slots, as for `20261026-four-dimm-retry`, with frequency back to
+  manual DDR5-3600 and three changes only: DRAM VDD 1.10 -> 1.25 V,
+  DRAM VDDQ 1.10 -> 1.25 V, CPU VDDIO / MC 1.140 -> 1.25 V. Timings
+  30/30/30/30/58, Ai Overclock Tuner Auto (no EXPO), PBO Disabled and Curve
+  Optimizer Auto unchanged. Operator: set these, photograph the voltage page,
+  frequency page, PBO page and Curve Optimizer page (all four this time), save,
+  reboot, copy photos to `~/memory-soak/run-5.bios/`. Agent: preflight
+  `--dimms 4 --serials 24000000,13000000,23000000,19000000 --speed 3600`,
+  check every photo against these values, then the runbook's 24 h / 96 GiB
+  soak. The 3600 run first failed at 7.04 h, so a failure is likely visible
+  overnight. Passes: keep 128 GB at these voltages; rerun the lab measurement
+  baseline. Fails: stop testing these four sticks and pursue a seller remedy;
+  a pair in A1/B1 would only tell board from DIMM for a warranty claim.
+  A summary for the seller of all runs so far is in the operator's Claude doc
+  "Memory errors with four DIMMs: test summary".
