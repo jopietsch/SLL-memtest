@@ -442,3 +442,25 @@ numbers are compared with earlier ones.
   under `~/memory-soak`. Seller summary doc updated with this run.
   BGP measurements remain blocked until a complete clean qualification run.
   Archive/record validation: 25 tests passed before committing.
+- **2026-10-28, after the 1.25 V failure: open question and seller report.**
+  BIOS is still at the run 6 voltages (DRAM VDD/VDDQ and MC 1.25 V); the
+  operator should return them to 1.10 / 1.10 / 1.140 V before normal use.
+  Memory vs motherboard is not settled. The runs rule out a single bad stick
+  (all four passed 24 h at one per channel in A2/B2), heat, the BIOS
+  settings tried, reseating, lower speed and higher voltage. They do not
+  separate: slots A1/B1 or their traces (board), two-DIMM-per-channel
+  signal margin on this board (board), the 9950X3D2 memory controller at
+  2DPC (CPU), or these sticks' 2DPC behaviour (memory). The soak logs
+  virtual addresses only, so it cannot say which channel, slot or stick
+  flipped. Tests that would narrow it, none started: (1) one pair alone in
+  A1/B1 for 24 h, where a fail implicates the slots/board; (2) a different
+  known-good 4 x 32 GB set, where the same fault implicates board or CPU and a
+  pass implicates this kit; (3) log physical addresses (needs root and the
+  AMD address map) to locate the failing channel and DIMM. The system was
+  bought complete, so the seller owns the remedy whatever the part; (1)
+  matters only if they ask which part failed.
+  The operator's doc "Memory errors with four DIMMs: test summary"
+  (https://claude.ai/artifact/H8XvvT6yUw2F9vfutXgNkA) is now a findings and
+  method report only: run 6 added, its questions for the company and repair
+  request removed at the operator's request. A 4-page PDF export for the
+  seller is at `~/memory-soak/Memory errors with four DIMMs - test summary.pdf`.
