@@ -1,0 +1,36 @@
+{
+  "run": "20261028-four-dimm-1v25",
+  "checked_at": "2026-10-28T10:10:00-07:00",
+  "source_revision": "b6f4ad5",
+  "experiment": "Four-DIMM voltage test: from 20261026-four-dimm-retry (DDR5-3600), only DRAM VDD/VDDQ 1.10->1.25 V and CPU VDDIO/MC 1.140->1.25 V",
+  "linux_preflight": "20261028-four-dimm-1v25.preflight.json",
+  "linux_preflight_passed": true,
+  "preflight_speed": 3600,
+  "slot_serial_mapping_confirmed": {
+    "A1": "24000000",
+    "A2": "13000000",
+    "B1": "23000000",
+    "B2": "19000000"
+  },
+  "photos_dir": "run-5.bios",
+  "photos": {
+    "IMG_0262.jpeg": "c54de09cdcbab7e4feb493b1b5f98684cf83051e7800fa9e9684cd03a4dc18c3",
+    "IMG_0263.jpeg": "2cb56d8cb5dcfe0b6536a5bf621c1bfa0cf79387a04130678d1a6969a025b4bd",
+    "IMG_0264.jpeg": "780b4cf5110fd2cb57f7852077af8c885e5017ab03f4783c401f65b266432200",
+    "IMG_0265.jpeg": "fb9e15aac513e4ac08ae604fca4199b1c6a62c4262a2a30c8f457cf587efbdc3",
+    "IMG_0266.jpeg": "ed66788ee692778fd0fb0492896226abfe632beb23b7ebfd14461af5145c67b2",
+    "IMG_0268.jpeg": "0908b2e41172b814fa60b780b5772afc9c0bfd73f10d4c30f7853c585cc91ec8",
+    "IMG_0269.jpeg": "f1141bcaaaa0c88693b8abbd2a4934c86cf6b67daecf2ae3c0c20b1b6488a27f"
+  },
+  "confirmed_by_photo": {
+    "IMG_0262.jpeg": "Ai Tweaker: Ai Overclock Tuner Auto (no EXPO/XMP); Memory Frequency DDR5-3600MHz manual; Target DRAM Frequency 3600MHz; ASUS Performance Enhancement Disabled",
+    "IMG_0263.jpeg": "Ai Tweaker voltages: CPU VDDIO/MC 1.25000 V manual; DRAM VDD 1.25000 V; DRAM VDDQ 1.25000 V; High DRAM Voltage Mode Auto",
+    "IMG_0264.jpeg": "DRAM Timing Control: Tcl/Trcd Wr/Trcd Rd/Trp/Tras 30/30/30/30/58 manual, CHA and CHB match",
+    "IMG_0265.jpeg": "DRAM Timing Control duplicate of IMG_0264",
+    "IMG_0266.jpeg": "Ai Tweaker > Precision Boost Overdrive: Precision Boost Overdrive Disabled",
+    "IMG_0268.jpeg": "F9 search CURVE: Curve Optimizer Auto (path Ai Tweaker > PBO > Curve Optimizer); GFX Curve Optimizer Auto",
+    "IMG_0269.jpeg": "EZ Mode: PRIME X870-P WIFI, BIOS 1804, 9950X3D2, 131072 MB, DIMM_A1/A2/B1/B2 Timetec 32768MB"
+  },
+  "notes": "Photos taken 16:55-16:59 BIOS clock (UTC; 09:55-09:59 PDT) before F10 save: live telemetry (Memory Frequency 3200 MHz, MC 1.168 V) reflects the previous boot, not the new setpoints. Linux preflight after reboot shows all four DIMMs configured at 3600 MT/s. IMG_0267 not supplied; not needed.",
+  "outcome": "SETTINGS_ACCEPTED"
+}

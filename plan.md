@@ -420,3 +420,25 @@ numbers are compared with earlier ones.
   started 10:10:50 PDT, first heartbeat 10:15:51, status RUNNING and clean.
   Expected end 2026-10-29 10:10 PDT. Evidence in
   `~/memory-soak/20261028-four-dimm-1v25*` (preflight, bios-check, revision).
+- **2026-10-28, four-DIMM at 1.25 V FAILED**, source revision `b6f4ad5`,
+  run `20261028-four-dimm-1v25` (start record above). Ran 10:10:50 to
+  16:01:07 PDT, 5.838 h, then stopped with SIGTERM at the operator's request
+  after corruption. Final summary: 2 memory corruption events, 166
+  `lane1.bit7` flips, zero kernel traps, 254 reader rounds, 362-375 passes
+  per memory worker. First event 14:04:03 (about 3.89 h), worker 19, pass
+  242, 96 flipped bytes; second 15:46:53 (about 5.60 h), worker 30, pass 359,
+  70 flipped bytes. Every flipped byte differs by exactly 0x80, the same
+  signature as at 3600 and 3200 MT/s with 1.10 V. No page-cache corruption.
+  Peak temperatures: DIMMs 42.75/42.75/41.25/37.5 C (about 3 C above the
+  1.10 V runs), CPU 60.125 C, NVMe 44.85 C. Raising DRAM VDD/VDDQ and MC to
+  1.25 V made the fault worse, not better: first error at 3.89 h vs 7.04 h at
+  1.10 V, and 166 vs 14 flipped bytes. Across 3600/1.10 V, 3200/1.10 V and
+  3600/1.25 V, four DIMMs fail with the same single bit; both pairs passed
+  24 h in A2/B2. Per the plan, stop testing these four sticks and pursue a
+  seller remedy; return voltages to 1.10 V before using the machine.
+  Results, log, revision, preflight, BIOS photos and settings evidence
+  archived in `results/9950/20261028-four-dimm-1v25/`; every copy
+  byte-compared with its source and SHA256SUMS verified. Originals retained
+  under `~/memory-soak`. Seller summary doc updated with this run.
+  BGP measurements remain blocked until a complete clean qualification run.
+  Archive/record validation: 25 tests passed before committing.
