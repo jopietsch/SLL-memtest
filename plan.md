@@ -403,3 +403,20 @@ numbers are compared with earlier ones.
   a pair in A1/B1 would only tell board from DIMM for a warranty claim.
   A summary for the seller of all runs so far is in the operator's Claude doc
   "Memory errors with four DIMMs: test summary".
+- **2026-10-28, four-DIMM 1.25 V soak started**, source revision `b6f4ad5`,
+  run `20261028-four-dimm-1v25`. Preflight (`--dimms 4 --serials
+  24000000,13000000,23000000,19000000 --speed 3600`) passed: A1 `24000000`,
+  A2 `13000000`, B1 `23000000`, B2 `19000000`, all configured 3600 MT/s,
+  BIOS 1804, 121.2 GiB visible, no measurement or other soak, input present.
+  Confirmed by photo (`~/memory-soak/run-5.bios/`, IMG_0262-0269, no 0267):
+  Memory Frequency DDR5-3600MHz manual, Ai Overclock Tuner Auto (no EXPO);
+  CPU VDDIO / MC 1.25000 V, DRAM VDD 1.25000 V, DRAM VDDQ 1.25000 V;
+  timings 30/30/30/30/58 on both channels; PBO Disabled; Curve Optimizer
+  Auto (F9 search); EZ Mode BIOS 1804, all four slots, 131072 MB. The photos'
+  live readings (3200 MHz, MC 1.168 V) are from the boot before the save;
+  the BIOS clock is UTC (16:55-16:59 = 09:55-09:59 PDT). All four planned
+  settings verified by photo, with no operator-only confirmation this time.
+  Launched from the agent sandbox, PID 12131, 24 h, 32 workers over 96 GiB;
+  started 10:10:50 PDT, first heartbeat 10:15:51, status RUNNING and clean.
+  Expected end 2026-10-29 10:10 PDT. Evidence in
+  `~/memory-soak/20261028-four-dimm-1v25*` (preflight, bios-check, revision).
